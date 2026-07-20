@@ -1,0 +1,34 @@
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+# Used by dotenv library to load environment variables.
+.env
+
+## Ruby version managers (rbenv, rvm, etc.)
+.ruby-version
+.ruby-version
+
+## Documentation cache and generated files:
+/.yardoc/
+/_yardoc/
+
+## Environment and testing:
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+## IDEs:
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store

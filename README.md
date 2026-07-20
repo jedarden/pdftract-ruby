@@ -1,0 +1,70 @@
+# pdftract-ruby
+
+Ruby SDK for pdftract - PDF extraction and conformance testing.
+
+## Installation
+
+```bash
+gem install pdftract -v 0.1.0
+```
+
+Or in your Gemfile:
+
+```ruby
+gem 'pdftract', '~> 0.1.0'
+```
+
+## Usage
+
+### Basic extract
+
+```ruby
+require 'pdftract'
+
+client = Pdftract.client
+doc = client.extract(Pdftract::PathSource.new('document.pdf'))
+puts "Pages: #{doc.pages.length}"
+```
+
+### Extract with OCR
+
+```ruby
+options = OpenStruct.new(
+  ocr_language: 'eng',
+  ocr_threshold: 0.7
+)
+
+doc = client.extract(Pdftract::PathSource.new('scanned.pdf'), options)
+```
+
+### Search
+
+```ruby
+client.search(Pdftract::PathSource.new('document.pdf'), 'invoice').each do |match|
+  puts "Found on page #{match.page}: #{match.text}"
+end
+```
+
+### Stream extraction
+
+```ruby
+client.extract_stream(Pdftract::PathSource.new('large.pdf')).each do |page|
+  puts "Page #{page.page}: #{page.blocks&.length || 0} blocks"
+end
+```
+
+## Binary version compatibility
+
+This SDK requires pdftract 0.1.0. Download from:
+https://github.com/jedarden/pdftract/releases/tag/v0.1.0
+
+## Troubleshooting
+
+### Binary not found
+Ensure `pdftract` is on your PATH. The SDK probes PATH for the executable.
+
+### Version mismatch
+The SDK will refuse to invoke mismatched binary versions. Install the correct version.
+
+### Network failure
+For remote URLs, check your network connection and TLS certificate chain.

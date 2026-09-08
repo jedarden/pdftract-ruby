@@ -16,7 +16,18 @@ Rake::TestTask.new(:conformance) do |t|
   t.warning = false
 end
 
-task default: :test
+# The fast static pre-filter gates the slow containerized suite
+# (pdftract-ruby/docs/plan/plan.md ADR-001): a visibility-keyword regression
+# fails in milliseconds, before the conformance suite spins up.
+task conformance: :"lint:visibility"
+
+task default: [:test, :"lint:visibility"]
+
+desc "Static lint for Ruby visibility-keyword bugs in generated lib/ output " \
+     "(see docs/plan/plan.md ADR-001, Alternative 3)"
+task :"lint:visibility" do
+  ruby "tools/lint_visibility.rb lib"
+end
 
 desc "Build the gem"
 task :build do
